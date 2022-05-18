@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
         // $currentURL = Route::current()->getName();
         // dd($currentURL);
-        return view('layouts.dashboard', ['url' => $this->currentURL]);
+        return view('layouts.dashboard');
     }
 
     /**

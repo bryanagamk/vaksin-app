@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vaksinator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
-class VaksinatorController extends Controller
+class JadwalVaksinController extends Controller
 {
-    private $currentURL;
-    public function __construct()
-    {
-        $this->currentURL = Route::current()->getName();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +13,8 @@ class VaksinatorController extends Controller
      */
     public function index()
     {
-        return view('layouts.vaksinator');
+        //
+        return view('layouts.jadwalvaksin');
     }
 
     /**
@@ -47,10 +41,10 @@ class VaksinatorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vaksinator $vaksinator)
+    public function show($id)
     {
         //
     }
@@ -58,10 +52,10 @@ class VaksinatorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vaksinator $vaksinator)
+    public function edit($id)
     {
         //
     }
@@ -70,10 +64,10 @@ class VaksinatorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vaksinator $vaksinator)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -81,10 +75,10 @@ class VaksinatorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vaksinator $vaksinator)
+    public function destroy($id)
     {
         //
     }

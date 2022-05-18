@@ -2,11 +2,11 @@
     <div>
         <nav aria-label="breadcrumb" class="d-none d-lg-block">
             <ol class="breadcrumb breadcrumb-style2 mg-b-10">
-                @if ($url != 'beranda')
+                @if (Request::path() != 'beranda')
                     <li class="breadcrumb-item"><a href="../beranda">Beranda</a></li>
                 @endif
-                <li class="breadcrumb-item active" aria-current="page">{{ $url }}</li>
-
+                <li class="breadcrumb-item active" aria-current="page">{{ str_replace('-', ' ', Request::path()) }}
+                </li>
             </ol>
         </nav>
 
@@ -17,5 +17,7 @@
     <div class="d-lg-none mg-t-10">
     </div>
     <div>
+        <a href="vaksinasi-add.html" class="btn btn-its tx-montserrat tx-semibold">
+            <i data-feather="plus" class="wd-10 mg-r-5 tx-color-its2"></i> Tambah</a>
     </div>
 </div>

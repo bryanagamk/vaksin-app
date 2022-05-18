@@ -33,6 +33,15 @@
     <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
     <meta name="author" content="ThemePixels">
 
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+
+    <!-- Styles -->
+    {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.png">
 
@@ -56,15 +65,6 @@
     </style>
 
     <link href="../../lib/select2/css/select2.min.css" rel="stylesheet">
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
 {{-- <body class="font-sans antialiased">
@@ -120,6 +120,8 @@
             <div class="container pd-x-0" id="content">
 
                 @include('components.breadcrumb')
+
+
 
                 <div class="row row-xs">
                     @yield('content')
