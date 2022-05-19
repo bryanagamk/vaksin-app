@@ -8,9 +8,9 @@
     </div>
     <div class="aside-body">
         <ul class="nav nav-aside">
+            <li class="nav-item"><a href="/beranda" class="nav-link"><i data-feather="home"></i>
+                    <span>Beranda</span></a></li>
             @role('admin')
-                <li class="nav-item"><a href="/beranda" class="nav-link"><i data-feather="home"></i>
-                        <span>Beranda</span></a></li>
                 <li class="nav-label mg-t-15">Kelola</li>
                 <li class="nav-item"><a href="/jadwal_vaksinasi" class="nav-link"><i data-feather="calendar"></i>
                         <span>Jadwal Vaksinasi</span></a></li>
