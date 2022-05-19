@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
-@section('title-page', 'Pegawai')
+@section('title-page', 'Detail Pegawai')
+
+@section('header-btn')
+    <div>
+        <a href="/pegawai" class="btn btn-white tx-montserrat tx-semibold"><i data-feather="arrow-left"
+                class="wd-10 mg-r-5"></i> Kembali</a>
+    </div>
+@endsection
 
 @section('content')
     <div class="row row-xs">

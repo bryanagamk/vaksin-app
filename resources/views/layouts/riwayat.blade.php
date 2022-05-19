@@ -1,0 +1,58 @@
+@extends('layouts.app')
+
+@section('title-page', 'Riwayat')
+
+@section('content')
+    <div class="row row-xs">
+        <div class="col-sm-12 col-lg-12">
+            <div class="card">
+                <div class="card-body card-list">
+                    <div class="card-list-item">
+                        <a href="/riwayat/1">
+                            <div class="d-flex justify-content-between align-items-center sc-link">
+                                <div class="media">
+                                    <div
+                                        class="wd-40 ht-40 bg-its-icon tx-color-its mg-r-15 mg-md-r-15 d-flex align-items-center justify-content-center rounded-its">
+                                        <span class="tx-medium tx-color-its tx-24">1</span>
+                                    </div>
+                                    <div class="media-body align-self-center">
+                                        <p class="tx-montserrat tx-semibold mg-b-0 tx-color-02">Sabtu, 06 Mar 2021</p>
+                                        <p class="tx-color-03 tx-13">07.00 - 12.00</p>
+                                        <span class="tx-13"><span class="tx-success"><i
+                                                    class="far fa-check-circle mg-r-5"></i>Selesai</span></span>
+                                    </div>
+                                </div>
+                                <div class="btn btn-icon btn-its-icon btn-hover">
+                                    <i data-feather="chevron-right"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-list-item">
+                        <a href="#">
+                            <div class="d-flex justify-content-between align-items-center sc-link">
+                                <div class="media">
+                                    <div
+                                        class="wd-40 ht-40 bg-its-icon tx-color-its mg-r-15 mg-md-r-15 d-flex align-items-center justify-content-center rounded-its">
+                                        <span class="tx-medium tx-color-its tx-24">2</span>
+                                    </div>
+                                    <div class="media-body align-self-center">
+                                        <p class="tx-montserrat tx-semibold mg-b-0 tx-color-02">Sabtu, 03 Apr 2021</p>
+                                        <p class="tx-color-03 tx-13">12.00 - 15.00</p>
+                                        <span class="tx-13"><span class="tx-info"><i
+                                                    class="far fa-arrow-alt-circle-right mg-r-5"></i>Menunggu
+                                                vaksinasi</span></span>
+                                    </div>
+                                </div>
+                                <div class="btn btn-icon btn-its-icon btn-hover">
+                                    <i data-feather="chevron-right"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+@stop

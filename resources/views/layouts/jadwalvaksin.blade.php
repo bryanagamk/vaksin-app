@@ -2,13 +2,20 @@
 
 @section('title-page', 'Jadwal Vaksinasi')
 
+@section('header-btn')
+    <div>
+        <a href="{{ route('jadwal_vaksinasi.create') }}" class="btn btn-its tx-montserrat tx-semibold">
+            <i data-feather="plus" class="wd-10 mg-r-5 tx-color-its2"></i> Tambah</a>
+    </div>
+@endsection
+
 @section('content')
     <div class="row row-xs">
         <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-body card-list">
                     <div class="card-list-item">
-                        <a href="jadwal-vaksinasi/1">
+                        <a href="jadwal_vaksinasi/1">
                             <div class="d-flex justify-content-between align-items-center sc-link">
                                 <div class="media">
                                     <div

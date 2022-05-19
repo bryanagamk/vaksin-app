@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class JadwalVaksinController extends Controller
+class RiwayatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class JadwalVaksinController extends Controller
     public function index()
     {
         //
-        return view('layouts.jadwalvaksin');
+        return view('layouts.riwayat');
     }
 
     /**
@@ -25,7 +25,6 @@ class JadwalVaksinController extends Controller
     public function create()
     {
         //
-        return view('layouts.jadwalcreate');
     }
 
     /**
@@ -48,8 +47,7 @@ class JadwalVaksinController extends Controller
     public function show($id)
     {
         //
-        // dd("show");
-        return view('layouts.jadwaldetail');
+        return view('layouts.riwayatdetail');
     }
 
     /**
@@ -61,8 +59,6 @@ class JadwalVaksinController extends Controller
     public function edit($id)
     {
         //
-        // dd("edit");
-        return view('layouts.jadwaledit');
     }
 
     /**

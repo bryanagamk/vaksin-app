@@ -2,6 +2,12 @@
 
 @section('title-page', 'Detail Vaksinasi')
 
+@section('header-btn')
+    <div>
+        <a href="/jadwal_vaksinasi" class="btn btn-white tx-montserrat tx-semibold"><i data-feather="arrow-left"
+                class="wd-10 mg-r-5"></i> Kembali</a>
+    </div>
+@endsection
 
 @section('content')
     <div class="row row-xs">
@@ -31,7 +37,8 @@
                                     <i data-feather="more-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="vaksinasi-edit.html"><i data-feather="edit"></i>Edit</a>
+                                    <a class="dropdown-item" href="{{ route('jadwal_vaksinasi.edit', ['id' => 1]) }}"><i
+                                            data-feather="edit"></i>Edit</a>
                                     <a class="dropdown-item" href="#hapusvaksinasi" data-toggle="modal"
                                         data-animation="effect-scale"><i data-feather="trash"></i>Hapus</a>
                                 </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\JadwalVaksinController;
 use App\Http\Controllers\JenisVaksinController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\VaksinatorController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,8 +27,10 @@ Route::get('/', function () {
 Route::get('/beranda', [HomeController::class, 'index'])->middleware(['auth'])->name('beranda');
 
 // Jadwal Vaksin
-Route::get('/jadwal-vaksinasi', [JadwalVaksinController::class, 'index'])->middleware(['auth'])->name('jadwal-vaksinasi.index');
-Route::get('/jadwal-vaksinasi/{id}', [JadwalVaksinController::class, 'show'])->middleware(['auth'])->name('jadwal-vaksinasi.show');
+Route::get('/jadwal_vaksinasi', [JadwalVaksinController::class, 'index'])->middleware(['auth'])->name('jadwal_vaksinasi.index');
+Route::get('/jadwal_vaksinasi/create', [JadwalVaksinController::class, 'create'])->middleware(['auth'])->name('jadwal_vaksinasi.create');
+Route::get('/jadwal_vaksinasi/{id}', [JadwalVaksinController::class, 'show'])->middleware(['auth'])->name('jadwal_vaksinasi.show');
+Route::get('/jadwal_vaksinasi/{id}/edit', [JadwalVaksinController::class, 'edit'])->middleware(['auth'])->name('jadwal_vaksinasi.edit');
 // Laporan
 Route::get('/laporan', [LaporanController::class, 'index'])->middleware(['auth'])->name('laporan.index');
 
@@ -37,6 +40,10 @@ Route::get('/pegawai/{id}', [PegawaiController::class, 'show'])->middleware(['au
 // Vaksinator
 Route::get('/vaksinator', [VaksinatorController::class, 'index'])->middleware(['auth'])->name('vaksinator.index');
 // Jenis Vaksin
-Route::get('/jenis-vaksin', [JenisVaksinController::class, 'index'])->middleware(['auth'])->name('jenis-vaksin.index');
+Route::get('/jenis_vaksin', [JenisVaksinController::class, 'index'])->middleware(['auth'])->name('jenis_vaksin.index');
+
+// Riwayat
+Route::get('/riwayat', [RiwayatController::class, 'index'])->middleware(['auth'])->name('riwayat.index');
+Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->middleware(['auth'])->name('riwayat.show');
 
 require __DIR__ . '/auth.php';
