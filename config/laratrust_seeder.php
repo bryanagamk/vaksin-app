@@ -20,9 +20,19 @@ return [
         'admin' => [
             'users' => 'c,r,u,d',
             'profile' => 'r,u',
+            'vaksinator' => 'c,r,d',
+            'jenis_vaksin' => 'c,r,d',
+            'profile' => 'r,u',
+            'jadwal_vaksinasi' => 'c, r, u, d',
+            'peserta_vaksinasi' => 'c, r, u, d',
+            'laporan' => 'r, u',
         ],
         'user' => [
             'profile' => 'r,u',
+            'riwayat' => 'r',
+            'kipi' => 'c, r, d',
+            'jadwal_vaksinasi' => 'r',
+            'daftar_vaksinasi' => 'c, r',
         ]
     ],
 

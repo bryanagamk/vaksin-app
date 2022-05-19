@@ -17,6 +17,13 @@ class AdminSeeder extends Seeder
     {
         $admin = new User;
         $admin->name = "admin";
+        $admin->nik = "";
+        $admin->gender = "";
+        $admin->birth_date = "";
+        $admin->nip = "";
+        $admin->blood_type = "";
+        $admin->handphone = "";
+        $admin->status = "";
         $admin->email = "admin@gmail.com";
         $admin->password = Hash::make('123456789');
         $admin->save();

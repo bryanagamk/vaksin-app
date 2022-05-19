@@ -33,20 +33,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="td-its align-middle border-bottom">
-                                    <a href="pegawai/1">
-                                        <p class="mg-b-0 tx-medium tx-color-its3">Gunawan</p>
-                                        <p class="mg-b-0 tx-13 tx-color-03">331309200300009</p>
-                                    </a>
-                                </td>
-                                <td class="td-its align-middle border-bottom">Laki-laki</td>
-                                <td class="td-its align-middle border-bottom">20/03/1998</td>
-                                <td class="td-its align-middle border-bottom">1234567890123456</td>
-                                <td class="td-its align-middle border-bottom">A</td>
-                                <td class="td-its align-middle border-bottom">081212341234</td>
-                                <td class="td-its align-middle border-bottom">Aktif</td>
-                            </tr>
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td class="td-its align-middle border-bottom">
+                                        <a href="{{ route('pegawai.show', ['id' => $user->id]) }}">
+                                            <p class="mg-b-0 tx-medium tx-color-its3">{{ $user->name }}</p>
+                                            <p class="mg-b-0 tx-13 tx-color-03">{{ $user->nik }}</p>
+                                        </a>
+                                    </td>
+                                    <td class="td-its align-middle border-bottom">{{ $user->gender }}</td>
+                                    <td class="td-its align-middle border-bottom">
+                                        {{ date('d/m/Y', strtotime($user->birth_date)) }}
+                                    </td>
+                                    <td class="td-its align-middle border-bottom">{{ $user->nip }}</td>
+                                    <td class="td-its align-middle border-bottom">{{ $user->blood_type }}</td>
+                                    <td class="td-its align-middle border-bottom">{{ $user->handphone }}</td>
+                                    <td class="td-its align-middle border-bottom">{{ $user->status }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

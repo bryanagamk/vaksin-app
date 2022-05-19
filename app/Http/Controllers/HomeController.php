@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class HomeController extends Controller
 {
-    private $currentURL;
-    public function __construct()
-    {
-        $this->currentURL = Route::current()->getName();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         // $currentURL = Route::current()->getName();
-        // dd($currentURL);
+        // dd(Auth::user()->name);
         return view('layouts.dashboard');
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
@@ -13,7 +15,9 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        return view('layouts.pegawai');
+        $role = Role::find(3);
+        $users = $role->users;
+        return view('layouts.pegawai', ['users' => $users]);
     }
 
     /**
@@ -46,7 +50,8 @@ class PegawaiController extends Controller
     public function show($id)
     {
         //
-        return view('layouts.pegawaidetail');
+        $user = User::find($id);
+        return view('layouts.pegawaidetail', ['user' => $user]);
     }
 
     /**

@@ -10,15 +10,20 @@
                         class="rounded-circle" alt=""></div>
             </a>
             <div class="dropdown-menu dropdown-menu-right allow-focus">
-                <h5 class="tx-medium tx-montserrat mg-b-5">Nama</h5>
-                <p class="mg-b-25 tx-13 tx-color-03">NRP/NIP</p>
+                <h5 class="tx-medium tx-montserrat mg-b-5">{{ Auth::user()->name }}</h5>
+                <p class="mg-b-25 tx-13 tx-color-03">{{ Auth::user()->nik }} / {{ Auth::user()->nip }}</p>
                 {{-- <a href="" class="dropdown-item" data-toggle="modal" data-target="#chgRoleUser"
                     data-animation="effect-scale">
                     <i data-feather="users"></i>Ganti hak akses
                 </a> --}}
                 <a href="" class="dropdown-item  ht-30"><i data-feather="home"></i>myITS SSO</a>
-                <a href="../dashboard/login-mhs.html" class="dropdown-item ht-30"><i
-                        data-feather="log-out"></i>Keluar</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-item ht-30">
+                        <i data-feather="log-out"></i>Keluar
+                    </button>
+                </form>
+
             </div>
         </div>
     </nav>
