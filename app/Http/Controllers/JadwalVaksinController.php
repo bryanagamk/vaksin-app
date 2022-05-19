@@ -47,6 +47,7 @@ class JadwalVaksinController extends Controller
     public function show($id)
     {
         //
+        return view('layouts.jadwaldetail');
     }
 
     /**

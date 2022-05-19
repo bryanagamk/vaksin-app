@@ -26,15 +26,17 @@ Route::get('/', function () {
 Route::get('/beranda', [HomeController::class, 'index'])->middleware(['auth'])->name('beranda');
 
 // Jadwal Vaksin
-Route::get('/jadwal-vaksinasi', [JadwalVaksinController::class, 'index'])->middleware(['auth'])->name('jadwal-vaksinasi');
+Route::get('/jadwal-vaksinasi', [JadwalVaksinController::class, 'index'])->middleware(['auth'])->name('jadwal-vaksinasi.index');
+Route::get('/jadwal-vaksinasi/{id}', [JadwalVaksinController::class, 'show'])->middleware(['auth'])->name('jadwal-vaksinasi.show');
 // Laporan
-Route::get('/laporan', [LaporanController::class, 'index'])->middleware(['auth'])->name('laporan');
+Route::get('/laporan', [LaporanController::class, 'index'])->middleware(['auth'])->name('laporan.index');
 
 // Pegawai
-Route::get('/pegawai', [PegawaiController::class, 'index'])->middleware(['auth'])->name('pegawai');
+Route::get('/pegawai', [PegawaiController::class, 'index'])->middleware(['auth'])->name('pegawai.index');
+Route::get('/pegawai/{id}', [PegawaiController::class, 'show'])->middleware(['auth'])->name('pegawai.show');
 // Vaksinator
-Route::get('/vaksinator', [VaksinatorController::class, 'index'])->middleware(['auth'])->name('vaksinator');
+Route::get('/vaksinator', [VaksinatorController::class, 'index'])->middleware(['auth'])->name('vaksinator.index');
 // Jenis Vaksin
-Route::get('/jenis-vaksin', [JenisVaksinController::class, 'index'])->middleware(['auth'])->name('jenis-vaksin');
+Route::get('/jenis-vaksin', [JenisVaksinController::class, 'index'])->middleware(['auth'])->name('jenis-vaksin.index');
 
 require __DIR__ . '/auth.php';
