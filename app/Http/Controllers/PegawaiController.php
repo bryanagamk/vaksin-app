@@ -15,8 +15,7 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $role = Role::find(3);
-        $users = $role->users;
+        $users = User::whereRoleIs('user')->get();
         return view('layouts.pegawai', ['users' => $users]);
     }
 

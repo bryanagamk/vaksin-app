@@ -12,33 +12,28 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadmin' => [
-            'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
         'admin' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u',
-            'vaksinator' => 'c,r,d',
-            'jenis_vaksin' => 'c,r,d',
-            'profile' => 'r,u',
-            'jadwal_vaksinasi' => 'c, r, u, d',
-            'peserta_vaksinasi' => 'c, r, u, d',
-            'laporan' => 'r, u',
+            'HomeController' => 'c,r,u,d',
+            'JadwalVaksinController' => 'c,r,u,d',
+            'VaksinatorController' => 'c,r,d',
+            'JenisVaksinController' => 'c,r,d',
+            'PegawaiController' => 'c,r,u,d',
+            '#peserta_vaksinasi' => 'c,r,u,d',
+            'LaporanController' => 'r,u',
         ],
         'user' => [
-            'profile' => 'r,u',
-            'riwayat' => 'r',
-            'kipi' => 'c, r, d',
-            'jadwal_vaksinasi' => 'r',
-            'daftar_vaksinasi' => 'c, r',
+            'HomeController' => 'c,r,u,d',
+            'JadwalVaksinController' => 'r',
+            '#daftar_vaksinasi' => 'c,r',
+            'RiwayatController' => 'r',
+            '#kipi' => 'c,r,d',
         ]
     ],
 
     'permissions_map' => [
         'c' => 'create',
-        'r' => 'read',
+        'r' => 'index',
+        's' => 'show',
         'u' => 'update',
         'd' => 'delete'
     ]
