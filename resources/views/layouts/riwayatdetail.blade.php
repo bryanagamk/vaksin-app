@@ -133,26 +133,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="td-its tx-medium align-middle border-bottom">20 Mar 2021</td>
-                                    <td class="td-its align-middle border-bottom">Pilek</td>
-                                    <td class="td-its align-middle border-bottom">Obat pilek</td>
-                                    <td class="td-its align-middle border-bottom">Sudah</td>
-                                    <td class="td-its align-middle border-bottom tx-color-03">
-                                        <a href="#hapuskipi" data-toggle="modal" data-animation="effect-scale"
-                                            class="btn btn-white btn-icon" role="button" data-toggle="modal"
-                                            data-target="#hapuskipi" data-animation="effect-scale"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-trash wd-10">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path
-                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                </path>
-                                            </svg></a>
-                                    </td>
-                                </tr>
+                                @if (count($member->kipis) == 0)
+                                    <div class="p-4">
+                                        Tidak ada data yang tersedia pada tabel ini
+                                    </div>
+                                @endif
+                                @foreach ($member->kipis as $kipi)
+                                    <tr>
+                                        <td class="td-its tx-medium align-middle border-bottom">
+                                            {{ date('d M Y', strtotime($kipi->kipi_date)) }}</td>
+                                        <td class="td-its align-middle border-bottom">{{ $kipi->symptomps }}</td>
+                                        <td class="td-its align-middle border-bottom">{{ $kipi->medical_treatment }}</td>
+                                        <td class="td-its align-middle border-bottom">{{ $kipi->call_doctor }}</td>
+                                        <td class="td-its align-middle border-bottom tx-color-03">
+                                            <a href="#hapuskipi" data-toggle="modal" data-animation="effect-scale"
+                                                class="btn btn-white btn-icon btn-delete" data-id={{ $kipi->id }}
+                                                role="button" data-toggle="modal" data-target="#hapuskipi"
+                                                data-animation="effect-scale"><svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" class="feather feather-trash wd-10">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path
+                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                    </path>
+                                                </svg></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -172,23 +180,24 @@
                     </button>
                     <h5 class="tx-montserrat tx-medium" id="tambahkipiLabel">Tambah KIPI</h5>
                 </div>
-                <form>
+                <form action="{{ route('riwayat.store_kipi', ['id' => $member->id]) }}" method="POST">
+                    @csrf
                     <div class="modal-body mn-ht-450 pd-t-0">
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold" for="tgl">Tanggal
                                 kejadian</label>
-                            <input type="date" id="tgl" name="tgl_kejadian" class="form-control " placeholder="" value=""
+                            <input type="date" id="tgl" name="kipi_date" class="form-control " placeholder="" value=""
                                 required>
                         </div>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold"
                                 for="tgl">Gejala</label>
-                            <textarea class="form-control" rows="2" placeholder="" required></textarea>
+                            <textarea class="form-control" rows="2" placeholder="" name="symptomps" required></textarea>
                         </div>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold"
                                 for="tgl">Tindakan</label>
-                            <textarea class="form-control" rows="2" placeholder="" required></textarea>
+                            <textarea class="form-control" rows="2" placeholder="" name="medical_treatment" required></textarea>
                         </div>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold" for="tgl">Sudah
@@ -196,14 +205,14 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="vaksin_sudah" value="1" name="pernah_vaksin"
+                                        <input type="radio" id="vaksin_sudah" value="Sudah" name="call_doctor"
                                             class="custom-control-input" required>
                                         <label class="custom-control-label" for="vaksin_sudah">Sudah</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="vaksin_belum" value="0" name="pernah_vaksin"
+                                        <input type="radio" id="vaksin_belum" value="Belum" name="call_doctor"
                                             class="custom-control-input">
                                         <label class="custom-control-label" for="vaksin_belum">Belum</label>
                                     </div>
@@ -222,6 +231,15 @@
     </div>
 @endsection
 
+<script src=//code.jquery.com/jquery-3.5.1.slim.min.js integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+crossorigin=anonymous></script>
+<script>
+    $('.btn-delete').click(function() {
+        var dataid = $(this).attr('data-id');
+        $('#id').val(dataid);
+    });
+</script>
+
 @section('modal-delete')
     <div class="modal fade effect-scale" id="hapuskipi" tabindex="-1" role="dialog" aria-labelledby="hapuskipi"
         aria-hidden="true">
@@ -232,9 +250,14 @@
                     <span>Tindakan ini tidak dapat dibatalkan.</span>
                 </div>
                 <div class="modal-footer bd-t-0">
-                    <a href="#" data-toggle="modal" data-animation="effect-scale"
-                        class="btn btn-white tx-montserrat tx-semibold" data-dismiss="modal">Batal</a>
-                    <button type="submit" class="btn btn-its tx-montserrat tx-semibold">Hapus</button>
+                    <form method="POST" action="{{ route('riwayat.delete_kipi', ['id' => $member->id]) }}">
+                        @csrf
+                        @method('delete')
+                        <input type=hidden id="id" name=id>
+                        <a href="#" data-toggle="modal" data-animation="effect-scale"
+                            class="btn btn-white tx-montserrat tx-semibold" data-dismiss="modal">Batal</a>
+                        <button type="submit" class="btn btn-its tx-montserrat tx-semibold">Hapus</button>
+                    </form>
                 </div>
             </div>
         </div>

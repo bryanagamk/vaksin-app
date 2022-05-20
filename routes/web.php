@@ -43,6 +43,8 @@ Route::delete('/jenis_vaksin', [JenisVaksinController::class, 'destroy'])->middl
 // Riwayat
 Route::get('/riwayat', [RiwayatController::class, 'index'])->middleware(['auth', 'role:user'])->name('riwayat.index');
 Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->middleware(['auth', 'role:user'])->name('riwayat.show');
+Route::post('/riwayat/{id}', [RiwayatController::class, 'store_kipi'])->middleware(['auth', 'role:user'])->name('riwayat.store_kipi');
+Route::delete('/riwayat/{id}', [RiwayatController::class, 'delete_kipi'])->middleware(['auth', 'role:user'])->name('riwayat.delete_kipi');
 
 Route::get('/beranda', [HomeController::class, 'index'])->middleware(['auth', 'role:user|admin'])->name('beranda');
 // Jadwal Vaksin

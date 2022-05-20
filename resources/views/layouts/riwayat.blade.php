@@ -7,6 +7,9 @@
         <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-body card-list">
+                    @if (count($histories) == 0)
+                        Tidak ada data yang tersedia pada tabel ini
+                    @endif
                     @foreach ($histories as $history)
                         <div class="card-list-item">
                             <a href="{{ route('riwayat.show', ['id' => $history->id]) }}">

@@ -24,4 +24,9 @@ class VaccineMember extends Model
     {
         return $this->belongsTo(VaccineSchedule::class, 'vaccine_schedule_id', 'id');
     }
+
+    public function kipis()
+    {
+        return $this->hasMany(Kipi::class);
+    }
 }

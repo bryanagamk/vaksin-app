@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kipi;
 use App\Models\VaccineMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,5 +90,48 @@ class RiwayatController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function store_kipi(Request $request, $id)
+    {
+        $request->validate([
+            'kipi_date' => ['required'],
+            'symptomps' => ['required'],
+        ]);
+
+        $kipi = Kipi::create([
+            'vaccine_member_id' => $id,
+            'kipi_date' => $request->kipi_date,
+            'symptomps' => $request->symptomps,
+            'medical_treatment' => $request->medical_treatment,
+            'call_doctor' => $request->call_doctor,
+        ]);
+
+        if ($kipi)
+            return redirect(route('riwayat.show', ['id' => $id]));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $kipi,
+                    'message' => 'Data not inserted'
+                ]
+            );
+    }
+
+    public function delete_kipi(Request $request, $id)
+    {
+        $deletedKipi = Kipi::destroy($request->id);
+
+        if ($deletedKipi)
+            return redirect(route('riwayat.show', ['id' => $id]));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $deletedKipi,
+                    'message' => 'Data not deleted'
+                ]
+            );
     }
 }
