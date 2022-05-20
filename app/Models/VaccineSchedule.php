@@ -19,6 +19,7 @@ class VaccineSchedule extends Model
         'vaccine_session_end',
         'location',
         'quota',
+        'remaining_quota',
     ];
 
     public function vaccinator()

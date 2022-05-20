@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use App\Models\VaccineType;
-use Illuminate\Support\Facades\Hash;
 
 class VaccineTypeSeeder extends Seeder
 {

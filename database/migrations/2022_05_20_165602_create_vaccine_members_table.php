@@ -17,6 +17,10 @@ class CreateVaccineMembersTable extends Migration
             $table->id();
             $table->integer('vaccine_schedule_id');
             $table->integer('user_id');
+            $table->integer('attendance')->default(0);
+            $table->integer('number_vaccine')->default(0);
+            $table->date('vaccine_at')->nullable();
+            $table->date('next_vaccine_at')->nullable();
             $table->timestamps();
         });
     }

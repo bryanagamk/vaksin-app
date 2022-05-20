@@ -23,12 +23,12 @@
                                     <p class="mg-b-5">
                                         {{ date('H:i', strtotime($schedule->vaccine_session_start)) }} -
                                         {{ date('H:i', strtotime($schedule->vaccine_session_end)) }}</p>
-                                    @if (count($members) >= $schedule->quota)
-                                        <span class="tx-13"><span class="tx-danger"><i
-                                                    class="far fa-times-circle mg-r-5"></i>Pendaftaran ditutup</span></span>
-                                    @else
+                                    @if ($schedule->remaining_quota)
                                         <span class="tx-13"><span class="tx-info"><i
                                                     class="far fa-play-circle mg-r-5"></i>Pendaftaran dibuka</span></span>
+                                    @else
+                                        <span class="tx-13"><span class="tx-danger"><i
+                                                    class="far fa-times-circle mg-r-5"></i>Pendaftaran ditutup</span></span>
                                     @endif
 
                                 </div>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Kuota</span>
-                        <p class="mg-b-0">{{ $schedule->quota }}</p>
+                        <p class="mg-b-0">{{ $schedule->remaining_quota }}</p>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
         @role('user')
             <div class="col-sm-12 col-lg-12 mg-b-10 pd-l-5 pd-r-5 ht-70 ht-md-70 ht-lg-70">
             </div>
-            @if (count($members) < $schedule->quota)
+            @if ($schedule->remaining_quota)
                 <div class="col-sm-12 col-lg-12 mg-b-10 d-flex justify-content-center">
                     <div class="card pos-fixed z-index-10 b-40 shadow wd-90p wd-md-80p wd-lg-70p animated slideInUp">
                         <div class="card-body card-alert-success d-flex justify-content-between align-items-center">

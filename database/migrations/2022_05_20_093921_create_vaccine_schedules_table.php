@@ -17,13 +17,14 @@ class CreateVaccineSchedulesTable extends Migration
             $table->id();
             $table->integer('vaccinator_id')->length(11);
             $table->integer('vaccine_type_id')->length(11);
-            $table->string('vaccine_regisdate_start');
-            $table->string('vaccine_regisdate_end');
+            $table->date('vaccine_regisdate_start');
+            $table->date('vaccine_regisdate_end');
             $table->string('vaccine_date');
             $table->string('vaccine_session_start');
             $table->string('vaccine_session_end');
             $table->string('location');
             $table->integer('quota');
+            $table->integer('remaining_quota');
             $table->timestamps();
         });
     }

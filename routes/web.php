@@ -26,6 +26,7 @@ Route::get('/', function () {
 
 // Laporan
 Route::get('/laporan', [LaporanController::class, 'index'])->middleware(['auth', 'role:admin'])->name('laporan.index');
+Route::post('/laporan/{id}', [LaporanController::class, 'attendance'])->middleware(['auth', 'role:admin'])->name('laporan.attendance');
 
 // Pegawai
 Route::get('/pegawai', [PegawaiController::class, 'index'])->middleware(['auth', 'role:admin'])->name('pegawai.index');
@@ -40,8 +41,8 @@ Route::post('/jenis_vaksin', [JenisVaksinController::class, 'store'])->middlewar
 Route::delete('/jenis_vaksin', [JenisVaksinController::class, 'destroy'])->middleware(['auth', 'role:admin'])->name('jenis_vaksin.destroy');
 
 // Riwayat
-Route::get('/riwayat', [RiwayatController::class, 'index'])->middleware(['auth', 'role:user', 'role:user'])->name('riwayat.index');
-Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->middleware(['auth', 'role:user', 'role-user'])->name('riwayat.show');
+Route::get('/riwayat', [RiwayatController::class, 'index'])->middleware(['auth', 'role:user'])->name('riwayat.index');
+Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->middleware(['auth', 'role:user'])->name('riwayat.show');
 
 Route::get('/beranda', [HomeController::class, 'index'])->middleware(['auth', 'role:user|admin'])->name('beranda');
 // Jadwal Vaksin

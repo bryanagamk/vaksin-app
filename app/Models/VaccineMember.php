@@ -12,10 +12,16 @@ class VaccineMember extends Model
     protected $fillable = [
         'vaccine_schedule_id',
         'user_id',
+        'number_vaccine',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function schedule()
+    {
+        return $this->belongsTo(VaccineSchedule::class, 'vaccine_schedule_id', 'id');
     }
 }

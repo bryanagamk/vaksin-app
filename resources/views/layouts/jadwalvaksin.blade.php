@@ -29,7 +29,7 @@
                                             <p class="tx-color-03 tx-13">
                                                 {{ date('H:i', strtotime($schedule->vaccine_session_start)) }} -
                                                 {{ date('H:i', strtotime($schedule->vaccine_session_end)) }}</p>
-                                            @if (count($schedule->members) < $schedule->quota)
+                                            @if ($schedule->remaining_quota)
                                                 <span class="tx-13"><span class="tx-info"><i
                                                             class="far fa-play-circle mg-r-5"></i>Pendaftaran
                                                         dibuka</span></span>

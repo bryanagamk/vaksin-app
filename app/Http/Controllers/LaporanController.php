@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VaccineMember;
+use App\Models\VaccineSchedule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -14,7 +17,30 @@ class LaporanController extends Controller
     public function index()
     {
         //
-        return view('layouts.laporan');
+        $members = VaccineMember::all();
+        return view('layouts.laporan', ['members' => $members]);
+    }
+
+    public function attendance(Request $request, $id)
+    {
+        $now = Carbon::now();
+        $member = VaccineMember::find($id);
+        $member->attendance = $request->attendance;
+        if ($request->attendance == 1) {
+            $member->vaccine_at = $now->toDateString();
+            $member->next_vaccine_at = $now->addMonth(3)->toDateString();
+            $member->number_vaccine = $member->number_vaccine + 1;
+        } else if ($member->attendance == 2) {
+            $member->number_vaccine = $member->number_vaccine;
+
+            // update quota
+            $schedule = VaccineSchedule::find($member->vaccine_schedule_id);
+            $schedule->remaining_quota = $schedule->remaining_quota + 1;
+            $schedule->save();
+        }
+        $member->save();
+
+        return redirect(route('laporan.index'));
     }
 
     /**

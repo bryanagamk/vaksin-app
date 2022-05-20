@@ -77,6 +77,7 @@ class JadwalVaksinController extends Controller
             'vaccine_session_end' => $request->vaccine_session_end,
             'location' => $request->location,
             'quota' => $request->quota,
+            'remaining_quota' => $request->quota,
         ]);
 
         if ($schedule)
@@ -197,12 +198,11 @@ class JadwalVaksinController extends Controller
     {
         $users = User::whereRoleIs('user')->get();
         $schedule = VaccineSchedule::find($id);
-        $quotaAvailable = count($schedule->members) < $schedule->quota;
         return view('layouts.jadwalpeserta', [
             'id' => $id,
             'users' => $users,
             'members' => $schedule->members,
-            'quota' => $quotaAvailable
+            'quota' => $schedule->remaining_quota
         ]);
     }
 
@@ -245,9 +245,22 @@ class JadwalVaksinController extends Controller
 
     public function member_register($id)
     {
+
+        // update quota
+        $schedule = VaccineSchedule::find($id);
+        $schedule->remaining_quota = $schedule->remaining_quota - 1;
+        $schedule->save();
+
+        // user register vaccine
+        $registered = VaccineMember::where('user_id', Auth::user()->id)
+            ->where('number_vaccine', '!=', 0)
+            ->where('attendance', 1)
+            ->get();
+
         $member = VaccineMember::create([
             'vaccine_schedule_id' => $id,
             'user_id' => Auth::user()->id,
+            'number_vaccine' => count($registered),
         ]);
         if ($member)
             return redirect(route('jadwal_vaksinasi.show', ['id' => $id]));
