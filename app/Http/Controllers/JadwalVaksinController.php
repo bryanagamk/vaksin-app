@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Vaccinator;
+use App\Models\VaccineMember;
 use App\Models\VaccineSchedule;
 use App\Models\VaccineType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JadwalVaksinController extends Controller
 {
@@ -18,7 +23,11 @@ class JadwalVaksinController extends Controller
     {
         //
         $vaccineSchedules = VaccineSchedule::all();
-        return view('layouts.jadwalvaksin', ['vaccineSchedules' => $vaccineSchedules]);
+        $now = Carbon::now();
+        return view('layouts.jadwalvaksin', [
+            'vaccineSchedules' => $vaccineSchedules,
+            'dateNow' => $now
+        ]);
     }
 
     /**
@@ -92,7 +101,8 @@ class JadwalVaksinController extends Controller
     {
         //
         $schedule = VaccineSchedule::find($id);
-        return view('layouts.jadwaldetail', ['schedule' => $schedule]);
+        $members = VaccineMember::where('vaccine_schedule_id', $id)->get();
+        return view('layouts.jadwaldetail', ['schedule' => $schedule, 'members' => $members]);
     }
 
     /**
@@ -179,6 +189,74 @@ class JadwalVaksinController extends Controller
                     'success' => false,
                     'data' => $deleted,
                     'message' => 'Data not deleted'
+                ]
+            );
+    }
+
+    public function member($id)
+    {
+        $users = User::whereRoleIs('user')->get();
+        $schedule = VaccineSchedule::find($id);
+        $quotaAvailable = count($schedule->members) < $schedule->quota;
+        return view('layouts.jadwalpeserta', [
+            'id' => $id,
+            'users' => $users,
+            'members' => $schedule->members,
+            'quota' => $quotaAvailable
+        ]);
+    }
+
+    public function member_create(Request $request, $id)
+    {
+        $users = $request->users;
+        foreach ($users as $user) {
+            $vaccineMember = VaccineMember::create([
+                'vaccine_schedule_id' => $id,
+                'user_id' => $user,
+            ]);
+
+            if (!$vaccineMember) return response()->json(
+                [
+                    'success' => false,
+                    'data' => $vaccineMember,
+                    'message' => 'Data not deleted'
+                ]
+            );
+        }
+
+        return redirect(route('jadwal_vaksinasi.member', ['id' => $id]));
+    }
+
+    public function member_destroy(Request $request, $id)
+    {
+        //
+        $deleted = VaccineMember::destroy($request->id);
+        if ($deleted)
+            return redirect(route('jadwal_vaksinasi.member', ['id' => $id]));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $deleted,
+                    'message' => 'Data not deleted'
+                ]
+            );
+    }
+
+    public function member_register($id)
+    {
+        $member = VaccineMember::create([
+            'vaccine_schedule_id' => $id,
+            'user_id' => Auth::user()->id,
+        ]);
+        if ($member)
+            return redirect(route('jadwal_vaksinasi.show', ['id' => $id]));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $member,
+                    'message' => 'Data not created'
                 ]
             );
     }

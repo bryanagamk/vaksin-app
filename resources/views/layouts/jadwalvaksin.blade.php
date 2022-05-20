@@ -25,13 +25,20 @@
                                         </div>
                                         <div class="media-body align-self-center">
                                             <p class="tx-montserrat tx-semibold mg-b-0 tx-color-02">
-                                                {{ $schedule->vaccine_date }}</p>
-                                            <p class="tx-color-03 tx-13">{{ $schedule->vaccine_session_start }} -
-                                                {{ $schedule->vaccine_session_end }}</p>
-                                            {{-- TODO: quota & session & vaccine date --}}
-                                            <span class="tx-13"><span class="tx-info"><i
-                                                        class="far fa-play-circle mg-r-5"></i>Pendaftaran
-                                                    dibuka</span></span>
+                                                {{ date('l, d M Y', strtotime($schedule->vaccine_date)) }}</p>
+                                            <p class="tx-color-03 tx-13">
+                                                {{ date('H:i', strtotime($schedule->vaccine_session_start)) }} -
+                                                {{ date('H:i', strtotime($schedule->vaccine_session_end)) }}</p>
+                                            @if (count($schedule->members) < $schedule->quota)
+                                                <span class="tx-13"><span class="tx-info"><i
+                                                            class="far fa-play-circle mg-r-5"></i>Pendaftaran
+                                                        dibuka</span></span>
+                                            @else
+                                                <span class="tx-13"><span class="tx-danger"><i
+                                                            class="far fa-times-circle mg-r-5"></i>Pendaftaran
+                                                        ditutup</span></span>
+                                            @endif
+
                                         </div>
                                     </div>
                                     <div class="btn btn-icon btn-its-icon btn-hover">

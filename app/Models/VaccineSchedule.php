@@ -30,4 +30,9 @@ class VaccineSchedule extends Model
     {
         return $this->belongsTo(VaccineType::class);
     }
+
+    public function members()
+    {
+        return $this->hasMany(VaccineMember::class);
+    }
 }

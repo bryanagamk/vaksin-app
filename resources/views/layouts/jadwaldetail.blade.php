@@ -23,8 +23,14 @@
                                     <p class="mg-b-5">
                                         {{ date('H:i', strtotime($schedule->vaccine_session_start)) }} -
                                         {{ date('H:i', strtotime($schedule->vaccine_session_end)) }}</p>
-                                    <span class="tx-13"><span class="tx-info"><i
-                                                class="far fa-play-circle mg-r-5"></i>Pendaftaran dibuka</span></span>
+                                    @if (count($members) >= $schedule->quota)
+                                        <span class="tx-13"><span class="tx-danger"><i
+                                                    class="far fa-times-circle mg-r-5"></i>Pendaftaran ditutup</span></span>
+                                    @else
+                                        <span class="tx-13"><span class="tx-info"><i
+                                                    class="far fa-play-circle mg-r-5"></i>Pendaftaran dibuka</span></span>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -90,33 +96,55 @@
             </div>
         </div>
 
-        <div class="col-sm-12 col-lg-12 mg-b-10">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row row-xs">
-                        <div class="col-10 col-sm-10 col-lg-10 d-flex align-items-center">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <h5 class="tx-medium tx-montserrat mg-b-0">Peserta Vaksinasi</h5>
+        @role('admin')
+            <div class="col-sm-12 col-lg-12 mg-b-10">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row row-xs">
+                            <div class="col-10 col-sm-10 col-lg-10 d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h5 class="tx-medium tx-montserrat mg-b-0">Peserta Vaksinasi</h5>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-2 col-sm-2 col-lg-2 d-flex align-items-center justify-content-end">
+                                <a href="{{ route('jadwal_vaksinasi.member', ['id' => 1]) }}"
+                                    class="btn btn-white tx-montserrat tx-semibold float-right d-none d-lg-block"><i
+                                        data-feather="edit" class="wd-10 mg-r-5"></i> Edit Peserta</a>
+                                <a href="vaksinasi-peserta.html"
+                                    class="btn btn-white btn-icon tx-montserrat tx-medium float-right d-lg-none"><i
+                                        data-feather="edit"></i></a>
+                            </div>
                         </div>
-                        <div class="col-2 col-sm-2 col-lg-2 d-flex align-items-center justify-content-end">
-                            <a href="vaksinasi-peserta.html"
-                                class="btn btn-white tx-montserrat tx-semibold float-right d-none d-lg-block"><i
-                                    data-feather="edit" class="wd-10 mg-r-5"></i> Edit Peserta</a>
-                            <a href="vaksinasi-peserta.html"
-                                class="btn btn-white btn-icon tx-montserrat tx-medium float-right d-lg-none"><i
-                                    data-feather="edit"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Peserta yang sudah dipilih</span>
+                        <p class="mg-b-0">{{ count($members) }} orang</p>
+                    </div>
+                </div>
+            </div>
+        @endrole
+
+        @role('user')
+            <div class="col-sm-12 col-lg-12 mg-b-10 pd-l-5 pd-r-5 ht-70 ht-md-70 ht-lg-70">
+            </div>
+            @if (count($members) < $schedule->quota)
+                <div class="col-sm-12 col-lg-12 mg-b-10 d-flex justify-content-center">
+                    <div class="card pos-fixed z-index-10 b-40 shadow wd-90p wd-md-80p wd-lg-70p animated slideInUp">
+                        <div class="card-body card-alert-success d-flex justify-content-between align-items-center">
+                            <span class="tx-montserrat tx-medium d-flex align-items-center"><i
+                                    class="fa-lg fas fa-check-circle mg-l-10 mg-r-15 tx-success"></i>Kuota tersedia.</span>
+                            <form class="z-index-10" method="POST"
+                                action="{{ route('jadwal_vaksinasi.member_register', ['id' => $schedule->id]) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-its tx-montserrat tx-semibold">Daftar Vaksinasi</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Peserta yang sudah dipilih</span>
-                    <p class="mg-b-0">300 orang</p>
-                </div>
-            </div>
-        </div>
+            @endif
+        @endrole
 
         <div class="modal fade effect-scale" id="hapusvaksinasi" tabindex="-1" role="dialog"
             aria-labelledby="hapusvaksinasi" aria-hidden="true">

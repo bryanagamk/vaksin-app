@@ -52,5 +52,9 @@ Route::get('/jadwal_vaksinasi/{id}', [JadwalVaksinController::class, 'show'])->m
 Route::delete('/jadwal_vaksinasi/{id}', [JadwalVaksinController::class, 'destroy'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.destroy');
 Route::get('/jadwal_vaksinasi/{id}/edit', [JadwalVaksinController::class, 'edit'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.edit');
 Route::post('/jadwal_vaksinasi/{id}/update', [JadwalVaksinController::class, 'update'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.update');
+Route::get('/jadwal_vaksinasi/{id}/peserta', [JadwalVaksinController::class, 'member'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.member');
+Route::post('/jadwal_vaksinasi/{id}/register', [JadwalVaksinController::class, 'member_register'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.member_register');
+Route::delete('/jadwal_vaksinasi/{id}/peserta', [JadwalVaksinController::class, 'member_destroy'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.member_destroy');
+Route::post('/jadwal_vaksinasi/{id}/create', [JadwalVaksinController::class, 'member_create'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.member_create');
 
 require __DIR__ . '/auth.php';

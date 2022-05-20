@@ -28,6 +28,11 @@ Breadcrumbs::for('jadwal_vaksinasi.edit', function (BreadcrumbTrail $trail): voi
     $trail->push('Edit vaksinasiasi', route('jadwal_vaksinasi.edit', 1));
 });
 
+Breadcrumbs::for('jadwal_vaksinasi.member', function (BreadcrumbTrail $trail): void {
+    $trail->parent('jadwal_vaksinasi.show');
+    $trail->push('Edit Peserta Vaksinasi', route('jadwal_vaksinasi.member', 1));
+});
+
 Breadcrumbs::for('laporan.index', function (BreadcrumbTrail $trail): void {
     $trail->parent('beranda');
     $trail->push('Laporan', route('laporan.index'));
