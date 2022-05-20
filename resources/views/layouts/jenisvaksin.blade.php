@@ -25,13 +25,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="td-its align-middle border-bottom">Coronavac</td>
-                                <td class="td-its align-middle border-bottom"><a href="#" class="btn btn-white btn-icon"
-                                        role="button" data-toggle="modal" data-target="#hapusjenisvaksin"
-                                        data-animation="effect-scale"><i data-feather="trash"
-                                            class="wd-10"></i></a></td>
-                            </tr>
+                            @foreach ($vaccineTypes as $vaccineType)
+                                <tr>
+                                    <td class="td-its align-middle border-bottom">{{ $vaccineType->name }}</td>
+                                    <td class="td-its align-middle border-bottom"><a href="#"
+                                            class="btn btn-white btn-icon btn-delete" role="button" data-toggle="modal"
+                                            data-target="#hapusjenisvaksin" data-id="{{ $vaccineType->id }}"
+                                            data-animation="effect-scale"><i data-feather="trash"
+                                                class="wd-10"></i></a></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -50,11 +53,11 @@
                     </button>
                     <h5 class="tx-montserrat tx-medium" id="tambahjenisvaksinLabel">Tambah Jenis Vaksin</h5>
                 </div>
-                <form>
+                <form action="{{ route('jenis_vaksin.store') }}" method="POST">
                     <div class="modal-body pd-t-0">
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Nama</label>
-                            <input type="text" id="nama" name="nama" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -68,6 +71,15 @@
     </div>
 @endsection
 
+<script src=//code.jquery.com/jquery-3.5.1.slim.min.js integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+crossorigin=anonymous></script>
+<script>
+    $('.btn-delete').click(function() {
+        var dataid = $(this).attr('data-id');
+        $('#id').val(dataid);
+    });
+</script>
+
 @section('modal-delete')
     <div class="modal fade effect-scale" id="hapusjenisvaksin" tabindex="-1" role="dialog"
         aria-labelledby="hapusjenisvaksin" aria-hidden="true">
@@ -78,7 +90,10 @@
                     <span>Tindakan ini tidak dapat dibatalkan.</span>
                 </div>
                 <div class="modal-footer bd-t-0">
-                    <form>
+                    <form method="POST" action="{{ route('jenis_vaksin.destroy') }}">
+                        @csrf
+                        @method('delete')
+                        <input type=hidden id="id" name=id>
                         <a href="#" data-toggle="modal" data-animation="effect-scale"
                             class="btn btn-white tx-montserrat tx-semibold" data-dismiss="modal">Batalkan</a>
                         <button type="submit" class="btn btn-its tx-montserrat tx-semibold mg-l-5">Hapus</button>

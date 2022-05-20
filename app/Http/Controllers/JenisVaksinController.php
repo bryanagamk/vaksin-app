@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VaccineType;
 use Illuminate\Http\Request;
 
 class JenisVaksinController extends Controller
@@ -14,7 +15,8 @@ class JenisVaksinController extends Controller
     public function index()
     {
         //
-        return view('layouts.jenisvaksin');
+        $vaccineTypes = VaccineType::all();
+        return view('layouts.jenisvaksin', ['vaccineTypes' => $vaccineTypes]);
     }
 
     /**
@@ -36,6 +38,25 @@ class JenisVaksinController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $vaccineType = VaccineType::create([
+            'name'  => $request->name
+        ]);
+
+
+        if ($vaccineType)
+            return redirect(route('jenis_vaksin.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $vaccineType,
+                    'message' => 'Data not inserted'
+                ]
+            );
     }
 
     /**
@@ -78,8 +99,20 @@ class JenisVaksinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $vaccineType = VaccineType::destroy($request->id);
+
+        if ($vaccineType)
+            return redirect(route('jenis_vaksin.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $vaccineType,
+                    'message' => 'Data not deleted'
+                ]
+            );
     }
 }

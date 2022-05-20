@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vaksinator;
+use App\Models\Vaccinator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class VaksinatorController extends Controller
 {
-    private $currentURL;
-    public function __construct()
-    {
-        $this->currentURL = Route::current()->getName();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +14,8 @@ class VaksinatorController extends Controller
      */
     public function index()
     {
-        return view('layouts.vaksinator');
+        $vaccinators = Vaccinator::all();
+        return view('layouts.vaksinator', ['vaccinators' => $vaccinators]);
     }
 
     /**
@@ -41,16 +36,36 @@ class VaksinatorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+
+        $vaccinator = Vaccinator::create([
+            'name'  => $request->name
+        ]);
+
+
+        if ($vaccinator)
+            return redirect(route('vaksinator.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $vaccinator,
+                    'message' => 'Data not inserted'
+                ]
+            );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  \App\Models\Vaccinator  $vaccinator
      * @return \Illuminate\Http\Response
      */
-    public function show(Vaksinator $vaksinator)
+    public function show($vaccinator)
     {
         //
     }
@@ -58,10 +73,10 @@ class VaksinatorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  \App\Models\Vaccinator  $vaccinator
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vaksinator $vaksinator)
+    public function edit(Vaccinator $vaccinator)
     {
         //
     }
@@ -70,10 +85,10 @@ class VaksinatorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  \App\Models\Vaccinator  $vaccinator
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vaksinator $vaksinator)
+    public function update(Request $request, Vaccinator $vaccinator)
     {
         //
     }
@@ -81,11 +96,22 @@ class VaksinatorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vaksinator  $vaksinator
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vaksinator $vaksinator)
+    public function destroy(Request $request)
     {
-        //
+        $vaccinator = Vaccinator::destroy($request->id);
+
+        if ($vaccinator)
+            return redirect(route('vaksinator.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $vaccinator,
+                    'message' => 'Data not deleted'
+                ]
+            );
     }
 }

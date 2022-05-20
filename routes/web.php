@@ -32,8 +32,12 @@ Route::get('/pegawai', [PegawaiController::class, 'index'])->middleware(['auth',
 Route::get('/pegawai/{id}', [PegawaiController::class, 'show'])->middleware(['auth', 'role:admin'])->name('pegawai.show');
 // Vaksinator
 Route::get('/vaksinator', [VaksinatorController::class, 'index'])->middleware(['auth', 'role:admin'])->name('vaksinator.index');
+Route::post('/vaksinator', [VaksinatorController::class, 'store'])->middleware(['auth', 'role:admin'])->name('vaksinator.store');
+Route::delete('/vaksinator', [VaksinatorController::class, 'destroy'])->middleware(['auth', 'role:admin'])->name('vaksinator.destroy');
 // Jenis Vaksin
 Route::get('/jenis_vaksin', [JenisVaksinController::class, 'index'])->middleware(['auth', 'role:admin'])->name('jenis_vaksin.index');
+Route::post('/jenis_vaksin', [JenisVaksinController::class, 'store'])->middleware(['auth', 'role:admin'])->name('jenis_vaksin.store');
+Route::delete('/jenis_vaksin', [JenisVaksinController::class, 'destroy'])->middleware(['auth', 'role:admin'])->name('jenis_vaksin.destroy');
 
 // Riwayat
 Route::get('/riwayat', [RiwayatController::class, 'index'])->middleware(['auth', 'role:user', 'role:user'])->name('riwayat.index');
