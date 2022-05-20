@@ -14,23 +14,26 @@
         <div class="col-sm-12 col-lg-12 mg-b-10">
             <div class="card">
                 <div class="card-body">
-                    <form action="#">
+                    <form action="{{ route('jadwal_vaksinasi.store') }}" method="POST">
+                        @csrf
                         <p class="tx-medium tx-15">Tentang Vaksinasi Ini</p>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Vaksinator</label>
-                            <select class="form-control select2" required>
+                            <select class="form-control select2" name="vaccinator_id" required>
                                 <option label="Pilih"></option>
-                                <option value="1" selected>RSU Haji</option>
-                                <option value="2">Puskesmas Keputih</option>
+                                @foreach ($vaccinators as $vaccinator)
+                                    <option value="{{ $vaccinator->id }}">{{ $vaccinator->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Jenis
                                 Vaksin</label>
-                            <select class="form-control select2" required>
+                            <select class="form-control select2" name="vaccine_type_id" required>
                                 <option label="Pilih"></option>
-                                <option value="1">AstraZeneca</option>
-                                <option value="2" selected>CoronaVac</option>
+                                @foreach ($vaccineTypes as $vaccineType)
+                                    <option value="{{ $vaccineType->id }}">{{ $vaccineType->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -39,15 +42,15 @@
                                     <label
                                         class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Pendaftaran
                                         dimulai</label>
-                                    <input type="date" id="tgl_mulai" name="tgl_mulai" class="form-control"
-                                        value="2021-03-20" required>
+                                    <input type="date" id="vaccine_regisdate_start" name="vaccine_regisdate_start"
+                                        class="form-control" value="" required>
                                 </div>
                                 <div class="col-6">
                                     <label
                                         class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Pendaftaran
                                         selesai</label>
-                                    <input type="date" id="tgl_mulai" name="tgl_selesai" class="form-control"
-                                        value="2021-03-31" required>
+                                    <input type="date" id="vaccine_regisdate_end" name="vaccine_regisdate_end"
+                                        class="form-control" value="" required>
                                 </div>
                             </div>
                         </div>
@@ -56,34 +59,34 @@
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Tanggal
                                 Vaksinasi</label>
-                            <input type="date" id="pelaksanaan" name="tgl_pelaksanaan" class="form-control"
-                                value="2021-04-05" required>
+                            <input type="date" id="pelaksanaan" name="vaccine_date" class="form-control" value=""
+                                required>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-6">
                                     <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Sesi
                                         Vaksinasi Dimulai</label>
-                                    <input type="time" id="sesi_mulai" name="sesi_mulai" class="form-control"
-                                        value="06:00:00" required>
+                                    <input type="time" id="vaccine_session_start" name="vaccine_session_start"
+                                        class="form-control" value="06:00:00" required>
                                 </div>
                                 <div class="col-6">
                                     <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Sesi
                                         Vaksinasi Selesai</label>
-                                    <input type="time" id="sesi_selesai" name="sesi_selesai" class="form-control"
-                                        value="20:00:00" required>
+                                    <input type="time" id="vaccine_session_end" name="vaccine_session_end"
+                                        class="form-control" value="20:00:00" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Lokasi</label>
-                            <input type="text" id="pelaksanaan" name="tgl_pelaksanaan" class="form-control"
-                                placeholder="Tempat vaksinasi" maxlength="100" value="Surabaya" required>
+                            <input type="text" id="location" name="location" class="form-control"
+                                placeholder="Tempat vaksinasi" maxlength="100" value="" required>
                         </div>
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Kuota</label>
-                            <input type="number" id="pelaksanaan" name="tgl_pelaksanaan" class="form-control"
-                                placeholder="Jumlah peserta" value="500" required>
+                            <input type="number" id="quota" name="quota" class="form-control" placeholder="Jumlah peserta"
+                                value="" required>
                         </div>
 
                         <button class="btn btn-its tx-montserrat tx-semibold float-right" type="submit">Simpan</button>

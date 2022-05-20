@@ -18,8 +18,11 @@
                         <div class="col-10 col-sm-10 col-lg-10 d-flex align-items-center">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <h5 class="tx-medium tx-montserrat mg-b-0">Sabtu, 03 Apr 2021</h5>
-                                    <p class="mg-b-5">07.00 - 12.00</p>
+                                    <h5 class="tx-medium tx-montserrat mg-b-0">
+                                        {{ date('l, d M Y', strtotime($schedule->vaccine_date)) }}</h5>
+                                    <p class="mg-b-5">
+                                        {{ date('H:i', strtotime($schedule->vaccine_session_start)) }} -
+                                        {{ date('H:i', strtotime($schedule->vaccine_session_end)) }}</p>
                                     <span class="tx-13"><span class="tx-info"><i
                                                 class="far fa-play-circle mg-r-5"></i>Pendaftaran dibuka</span></span>
                                 </div>
@@ -37,10 +40,12 @@
                                     <i data-feather="more-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{ route('jadwal_vaksinasi.edit', ['id' => 1]) }}"><i
+                                    <a class="dropdown-item"
+                                        href="{{ route('jadwal_vaksinasi.edit', ['id' => $schedule->id]) }}"><i
                                             data-feather="edit"></i>Edit</a>
-                                    <a class="dropdown-item" href="#hapusvaksinasi" data-toggle="modal"
-                                        data-animation="effect-scale"><i data-feather="trash"></i>Hapus</a>
+                                    <a class="dropdown-item btn-delete" href="#hapusvaksinasi" data-toggle="modal"
+                                        data-id="{{ $schedule->id }}" data-animation="effect-scale"><i
+                                            data-feather="trash"></i>Hapus</a>
                                 </div>
                             </div>
                         </div>
@@ -50,33 +55,36 @@
                     <p class="tx-medium tx-15">Tentang Vaksinasi Ini</p>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Vaksinator</span>
-                        <p class="mg-b-0">RSU Haji</p>
+                        <p class="mg-b-0">{{ $schedule->vaccinator->name }}</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Jenis Vaksin</span>
-                        <p class="mg-b-0">Coronavac</p>
+                        <p class="mg-b-0">{{ $schedule->vaccine_type->name }}</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Pendaftaran</span>
-                        <p class="mg-b-0">20 Mar 2021 - 31 Mar 2021</p>
+                        <p class="mg-b-0">{{ date('d M Y', strtotime($schedule->vaccine_regisdate_start)) }} -
+                            {{ date('d M Y', strtotime($schedule->vaccine_regisdate_end)) }}</p>
                     </div>
                     <hr class="mg-t-20 mg-b-20">
                     <p class="tx-medium tx-15">Pelaksanaan</p>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Tanggal Vaksinasi</span>
-                        <p class="mg-b-0">03 Apr 2021</p>
+                        <p class="mg-b-0">{{ date('d M Y', strtotime($schedule->vaccine_date)) }}</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Sesi Vaksinasi</span>
-                        <p class="mg-b-0">07.00 - 12.00</p>
+                        <p class="mg-b-5">
+                            {{ date('H:i', strtotime($schedule->vaccine_session_start)) }} -
+                            {{ date('H:i', strtotime($schedule->vaccine_session_end)) }}</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Lokasi</span>
-                        <p class="mg-b-0">Surabaya</p>
+                        <p class="mg-b-0">{{ $schedule->location }}</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Kuota</span>
-                        <p class="mg-b-0">500 orang</p>
+                        <p class="mg-b-0">{{ $schedule->quota }}</p>
                     </div>
                 </div>
             </div>
@@ -119,7 +127,10 @@
                         <span>Tindakan ini tidak dapat dibatalkan.</span>
                     </div>
                     <div class="modal-footer bd-t-0">
-                        <form>
+                        <form method="POST" action="{{ route('jadwal_vaksinasi.destroy', ['id' => $schedule->id]) }}">
+                            @csrf
+                            @method('delete')
+                            <input type=hidden id="id" name=id value="{{ $schedule->id }}">
                             <a href="#" data-toggle="modal" data-animation="effect-scale"
                                 class="btn btn-white tx-montserrat tx-semibold" data-dismiss="modal">Batalkan</a>
                             <button type="submit" class="btn btn-its tx-montserrat tx-semibold mg-l-5">Hapus</button>

@@ -47,7 +47,10 @@ Route::get('/beranda', [HomeController::class, 'index'])->middleware(['auth', 'r
 // Jadwal Vaksin
 Route::get('/jadwal_vaksinasi', [JadwalVaksinController::class, 'index'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.index');
 Route::get('/jadwal_vaksinasi/create', [JadwalVaksinController::class, 'create'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.create');
+Route::post('/jadwal_vaksinasi/store', [JadwalVaksinController::class, 'store'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.store');
 Route::get('/jadwal_vaksinasi/{id}', [JadwalVaksinController::class, 'show'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.show');
+Route::delete('/jadwal_vaksinasi/{id}', [JadwalVaksinController::class, 'destroy'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.destroy');
 Route::get('/jadwal_vaksinasi/{id}/edit', [JadwalVaksinController::class, 'edit'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.edit');
+Route::post('/jadwal_vaksinasi/{id}/update', [JadwalVaksinController::class, 'update'])->middleware(['auth', 'role:user|admin'])->name('jadwal_vaksinasi.update');
 
 require __DIR__ . '/auth.php';

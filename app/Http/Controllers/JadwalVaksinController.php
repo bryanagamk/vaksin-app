@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vaccinator;
+use App\Models\VaccineSchedule;
+use App\Models\VaccineType;
 use Illuminate\Http\Request;
 
 class JadwalVaksinController extends Controller
@@ -14,7 +17,8 @@ class JadwalVaksinController extends Controller
     public function index()
     {
         //
-        return view('layouts.jadwalvaksin');
+        $vaccineSchedules = VaccineSchedule::all();
+        return view('layouts.jadwalvaksin', ['vaccineSchedules' => $vaccineSchedules]);
     }
 
     /**
@@ -25,7 +29,12 @@ class JadwalVaksinController extends Controller
     public function create()
     {
         //
-        return view('layouts.jadwalcreate');
+        $vaccinators = Vaccinator::all();
+        $vaccineTypes = VaccineType::all();
+        return view('layouts.jadwalcreate', [
+            'vaccinators' => $vaccinators,
+            'vaccineTypes' => $vaccineTypes
+        ]);
     }
 
     /**
@@ -37,6 +46,40 @@ class JadwalVaksinController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'vaccinator_id' => ['required'],
+            'vaccine_type_id' => ['required'],
+            'vaccine_regisdate_start' => ['required', 'string', 'max:255'],
+            'vaccine_regisdate_end' => ['required', 'string', 'max:255'],
+            'vaccine_date' => ['required', 'string', 'max:255'],
+            'vaccine_session_start' => ['required', 'string', 'max:255'],
+            'vaccine_session_end' => ['required', 'string', 'max:255'],
+            'location' => ['required', 'string', 'max:255'],
+            'quota' => ['required'],
+        ]);
+
+        $schedule = VaccineSchedule::create([
+            'vaccinator_id' => $request->vaccinator_id,
+            'vaccine_type_id' => $request->vaccine_type_id,
+            'vaccine_regisdate_start' => $request->vaccine_regisdate_start,
+            'vaccine_regisdate_end' => $request->vaccine_regisdate_end,
+            'vaccine_date' => $request->vaccine_date,
+            'vaccine_session_start' => $request->vaccine_session_start,
+            'vaccine_session_end' => $request->vaccine_session_end,
+            'location' => $request->location,
+            'quota' => $request->quota,
+        ]);
+
+        if ($schedule)
+            return redirect(route('jadwal_vaksinasi.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $schedule,
+                    'message' => 'Data not inserted'
+                ]
+            );
     }
 
     /**
@@ -48,8 +91,8 @@ class JadwalVaksinController extends Controller
     public function show($id)
     {
         //
-        // dd("show");
-        return view('layouts.jadwaldetail');
+        $schedule = VaccineSchedule::find($id);
+        return view('layouts.jadwaldetail', ['schedule' => $schedule]);
     }
 
     /**
@@ -61,8 +104,14 @@ class JadwalVaksinController extends Controller
     public function edit($id)
     {
         //
-        // dd("edit");
-        return view('layouts.jadwaledit');
+        $vaccinators = Vaccinator::all();
+        $vaccineTypes = VaccineType::all();
+        $schedule = VaccineSchedule::find($id);
+        return view('layouts.jadwaledit', [
+            'vaccinators' => $vaccinators,
+            'vaccineTypes' => $vaccineTypes,
+            'schedule' => $schedule,
+        ]);
     }
 
     /**
@@ -75,6 +124,41 @@ class JadwalVaksinController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'vaccinator_id' => ['required'],
+            'vaccine_type_id' => ['required'],
+            'vaccine_regisdate_start' => ['required', 'string', 'max:255'],
+            'vaccine_regisdate_end' => ['required', 'string', 'max:255'],
+            'vaccine_date' => ['required', 'string', 'max:255'],
+            'vaccine_session_start' => ['required', 'string', 'max:255'],
+            'vaccine_session_end' => ['required', 'string', 'max:255'],
+            'location' => ['required', 'string', 'max:255'],
+            'quota' => ['required'],
+        ]);
+
+        $schedule = VaccineSchedule::whereId($id)
+            ->update([
+                'vaccinator_id' => $request->vaccinator_id,
+                'vaccine_type_id' => $request->vaccine_type_id,
+                'vaccine_regisdate_start' => $request->vaccine_regisdate_start,
+                'vaccine_regisdate_end' => $request->vaccine_regisdate_end,
+                'vaccine_date' => $request->vaccine_date,
+                'vaccine_session_start' => $request->vaccine_session_start,
+                'vaccine_session_end' => $request->vaccine_session_end,
+                'location' => $request->location,
+                'quota' => $request->quota,
+            ]);
+
+        if ($schedule)
+            return redirect(route('jadwal_vaksinasi.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $schedule,
+                    'message' => 'Data not updated'
+                ]
+            );
     }
 
     /**
@@ -86,5 +170,16 @@ class JadwalVaksinController extends Controller
     public function destroy($id)
     {
         //
+        $deleted = VaccineSchedule::destroy($id);
+        if ($deleted)
+            return redirect(route('jadwal_vaksinasi.index'));
+        else
+            return response()->json(
+                [
+                    'success' => false,
+                    'data' => $deleted,
+                    'message' => 'Data not deleted'
+                ]
+            );
     }
 }
