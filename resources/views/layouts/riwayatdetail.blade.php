@@ -18,10 +18,25 @@
                         <div class="col-10 col-sm-10 col-lg-10 d-flex align-items-center">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <h5 class="tx-medium tx-montserrat mg-b-0">Sabtu, 06 Mar 2021</h5>
-                                    <p class="mg-b-5">12.00 - 15.00</p>
-                                    <span class="tx-13"><span class="tx-success"><i
-                                                class="far fa-check-circle mg-r-5"></i>Selesai</span></span>
+                                    <h5 class="tx-medium tx-montserrat mg-b-0">
+                                        @if ($member->attendance)
+                                            {{ date('l, d M Y', strtotime($member->vaccine_at)) }}
+                                        @else
+                                            {{ date('l, d M Y', strtotime($member->schedule->vaccine_date)) }}
+                                        @endif
+                                    </h5>
+                                    <p class="mg-b-5">
+                                        {{ date('H:i', strtotime($member->schedule->vaccine_session_start)) }} -
+                                        {{ date('H:i', strtotime($member->schedule->vaccine_session_end)) }}
+                                    </p>
+                                    @if ($member->attendance)
+                                        <span class="tx-13"><span class="tx-success"><i
+                                                    class="far fa-check-circle mg-r-5"></i>Selesai</span></span>
+                                    @else
+                                        <span class="tx-13"><span class="tx-info"><i
+                                                    class="far fa-arrow-alt-circle-right mg-r-5"></i>Menunggu
+                                                Vaksinasi</span></span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -31,37 +46,55 @@
                     <p class="tx-medium tx-15">Tentang Vaksinasi Ini</p>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Vaksinator</span>
-                        <p class="mg-b-0">RSU Haji</p>
+                        <p class="mg-b-0">
+                            {{ $member->schedule->vaccinator->name }}
+                        </p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Jenis Vaksin</span>
-                        <p class="mg-b-0">Coronavac</p>
+                        <p class="mg-b-0">
+                            {{ $member->schedule->vaccine_type->name }}
+                        </p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Pendaftaran</span>
-                        <p class="mg-b-0">20 Feb 2021 - 31 Feb 2021</p>
+                        <p class="mg-b-0">
+                            {{ date('d M Y', strtotime($member->schedule->vaccine_regisdate_start)) }} -
+                            {{ date('d M Y', strtotime($member->schedule->vaccine_regisdate_end)) }}
+                        </p>
                     </div>
                     <hr class="mg-t-20 mg-b-20">
                     <p class="tx-medium tx-15">Pelaksanaan</p>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Tanggal Vaksinasi</span>
-                        <p class="mg-b-0">06 Mar 2021</p>
+                        <p class="mg-b-0">
+                            {{ date('d M Y', strtotime($member->schedule->vaccine_date)) }}
+                        </p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Sesi Vaksinasi</span>
-                        <p class="mg-b-0">12.00 - 15.00</p>
+                        <p class="mg-b-0">
+                            {{ date('H:i', strtotime($member->schedule->vaccine_session_start)) }} -
+                            {{ date('H:i', strtotime($member->schedule->vaccine_session_end)) }}
+                        </p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Lokasi</span>
-                        <p class="mg-b-0">Surabaya</p>
+                        <p class="mg-b-0">{{ $member->schedule->location }}</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Kuota</span>
-                        <p class="mg-b-0">500 orang</p>
+                        <p class="mg-b-0">{{ $member->schedule->quota }} orang</p>
                     </div>
                     <div class="card-list-text">
                         <span class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Vaksinasi Ke</span>
-                        <p class="mg-b-0">1</p>
+                        <p class="mg-b-0">
+                            @if ($member->attendance)
+                                {{ $member->number_vaccine }}
+                            @else
+                                {{ $member->number_vaccine + 1 }}
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>

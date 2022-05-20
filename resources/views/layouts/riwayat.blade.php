@@ -7,49 +7,53 @@
         <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-body card-list">
-                    <div class="card-list-item">
-                        <a href="/riwayat/1">
-                            <div class="d-flex justify-content-between align-items-center sc-link">
-                                <div class="media">
-                                    <div
-                                        class="wd-40 ht-40 bg-its-icon tx-color-its mg-r-15 mg-md-r-15 d-flex align-items-center justify-content-center rounded-its">
-                                        <span class="tx-medium tx-color-its tx-24">1</span>
+                    @foreach ($histories as $history)
+                        <div class="card-list-item">
+                            <a href="{{ route('riwayat.show', ['id' => $history->id]) }}">
+                                <div class="d-flex justify-content-between align-items-center sc-link">
+                                    <div class="media">
+                                        <div
+                                            class="wd-40 ht-40 bg-its-icon tx-color-its mg-r-15 mg-md-r-15 d-flex align-items-center justify-content-center rounded-its">
+                                            @if ($history->attendance)
+                                                <span
+                                                    class="tx-medium tx-color-its tx-24">{{ $history->number_vaccine }}</span>
+                                            @else
+                                                <span
+                                                    class="tx-medium tx-color-its tx-24">{{ $history->number_vaccine + 1 }}</span>
+                                            @endif
+
+                                        </div>
+                                        <div class="media-body align-self-center">
+                                            <p class="tx-montserrat tx-semibold mg-b-0 tx-color-02">
+                                                @if ($history->attendance)
+                                                    {{ date('l, d M Y', strtotime($history->vaccine_at)) }}
+                                                @else
+                                                    {{ date('l, d M Y', strtotime($history->schedule->vaccine_date)) }}
+                                                @endif
+
+                                            </p>
+                                            <p class="tx-color-03 tx-13">
+                                                {{ date('H:i', strtotime($history->schedule->vaccine_session_start)) }} -
+                                                {{ date('H:i', strtotime($history->schedule->vaccine_session_end)) }}
+                                            </p>
+                                            @if ($history->attendance)
+                                                <span class="tx-13"><span class="tx-success"><i
+                                                            class="far fa-check-circle mg-r-5"></i>Selesai</span></span>
+                                            @else
+                                                <span class="tx-13"><span class="tx-info"><i
+                                                            class="far fa-arrow-alt-circle-right mg-r-5"></i>Menunggu
+                                                        Vaksinasi</span></span>
+                                            @endif
+
+                                        </div>
                                     </div>
-                                    <div class="media-body align-self-center">
-                                        <p class="tx-montserrat tx-semibold mg-b-0 tx-color-02">Sabtu, 06 Mar 2021</p>
-                                        <p class="tx-color-03 tx-13">07.00 - 12.00</p>
-                                        <span class="tx-13"><span class="tx-success"><i
-                                                    class="far fa-check-circle mg-r-5"></i>Selesai</span></span>
+                                    <div class="btn btn-icon btn-its-icon btn-hover">
+                                        <i data-feather="chevron-right"></i>
                                     </div>
                                 </div>
-                                <div class="btn btn-icon btn-its-icon btn-hover">
-                                    <i data-feather="chevron-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card-list-item">
-                        <a href="#">
-                            <div class="d-flex justify-content-between align-items-center sc-link">
-                                <div class="media">
-                                    <div
-                                        class="wd-40 ht-40 bg-its-icon tx-color-its mg-r-15 mg-md-r-15 d-flex align-items-center justify-content-center rounded-its">
-                                        <span class="tx-medium tx-color-its tx-24">2</span>
-                                    </div>
-                                    <div class="media-body align-self-center">
-                                        <p class="tx-montserrat tx-semibold mg-b-0 tx-color-02">Sabtu, 03 Apr 2021</p>
-                                        <p class="tx-color-03 tx-13">12.00 - 15.00</p>
-                                        <span class="tx-13"><span class="tx-info"><i
-                                                    class="far fa-arrow-alt-circle-right mg-r-5"></i>Menunggu
-                                                vaksinasi</span></span>
-                                    </div>
-                                </div>
-                                <div class="btn btn-icon btn-its-icon btn-hover">
-                                    <i data-feather="chevron-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

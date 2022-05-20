@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VaccineMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RiwayatController extends Controller
 {
@@ -14,7 +16,11 @@ class RiwayatController extends Controller
     public function index()
     {
         //
-        return view('layouts.riwayat');
+        $histories = VaccineMember::where('user_id', Auth::user()->id)
+            ->where('attendance', '!=', 2)
+            ->get();
+
+        return view('layouts.riwayat', ['histories' => $histories]);
     }
 
     /**
@@ -47,7 +53,8 @@ class RiwayatController extends Controller
     public function show($id)
     {
         //
-        return view('layouts.riwayatdetail');
+        $member = VaccineMember::find($id);
+        return view('layouts.riwayatdetail', ['member' => $member]);
     }
 
     /**
