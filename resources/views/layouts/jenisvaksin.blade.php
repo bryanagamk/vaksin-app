@@ -54,6 +54,7 @@
                     <h5 class="tx-montserrat tx-medium" id="tambahjenisvaksinLabel">Tambah Jenis Vaksin</h5>
                 </div>
                 <form action="{{ route('jenis_vaksin.store') }}" method="POST">
+                    @csrf
                     <div class="modal-body pd-t-0">
                         <div class="form-group">
                             <label class="d-block tx-10 tx-spacing-1 tx-color-03 tx-uppercase tx-semibold">Nama</label>

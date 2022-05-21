@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="col-2 col-sm-2 col-lg-2 d-flex align-items-center justify-content-end">
-                                <a href="{{ route('jadwal_vaksinasi.member', ['id' => 1]) }}"
+                                <a href="{{ route('jadwal_vaksinasi.member', ['id' => $schedule->id]) }}"
                                     class="btn btn-white tx-montserrat tx-semibold float-right d-none d-lg-block"><i
                                         data-feather="edit" class="wd-10 mg-r-5"></i> Edit Peserta</a>
                                 <a href="vaksinasi-peserta.html"

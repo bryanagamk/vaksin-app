@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body pd-0 table-responsive">
                 <table id="example1" class="table table-borderless mg-0">
-                    <thead>
+                    {{-- <thead>
                         <tr class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase">
                             <th class="wd-25p th-its" style="border-bottom: none !important">
                                 <span>Pegawai</span>
@@ -46,7 +46,7 @@
                             <td class="td-its align-middle border-bottom">081212341234</td>
                             <td class="td-its align-middle border-bottom">Aktif</td>
                         </tr>
-                    </tbody>
+                    </tbody> --}}
                 </table>
             </div>
         </div>
